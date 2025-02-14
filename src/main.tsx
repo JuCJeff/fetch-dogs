@@ -8,7 +8,7 @@ import App from "./App.jsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Router>
+    <Router basename="/fetch-dogs/">
       <GlobalProvider>
         <App />
       </GlobalProvider>

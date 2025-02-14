@@ -5,4 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: process.env.NODE_ENV === "production" ? "/fetch-dogs/" : "/",
   plugins: [react()],
+  server: {
+    open: "/fetch-dogs/",
+  },
 });
