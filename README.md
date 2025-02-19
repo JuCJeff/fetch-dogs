@@ -47,10 +47,13 @@ yarn dev
 📂 shelter-dog-finder
 ├── 📁 src
 │   ├── 📁 components   # Reusable UI components
-│   ├── 📁 pages        # Page-level components
+│   ├── 📁 context      # Global state management
+│   ├── 📁 data         # Static or mock data files
 │   ├── 📁 hooks        # Custom hooks
+│   ├── 📁 pages        # Page-level components
 │   ├── 📁 services     # API calls and external data fetching
 │   ├── 📁 types        # TypeScript type definitions
+│   ├── 📁 utils        # Helper functions and utilities
 │   ├── App.tsx        # Root component
 │   ├── main.tsx       # Entry point
 │
