@@ -1,19 +1,6 @@
-import {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  ReactNode,
-} from "react";
+import { useState, useEffect, ReactNode, useMemo } from "react";
 
-type FavoriteContextType = {
-  favorites: Set<string>;
-  toggleFavorite: (dogId: string) => void;
-};
-
-const FavoritesContext = createContext<FavoriteContextType | undefined>(
-  undefined
-);
+import { FavoritesContext } from "./FavoritesContext";
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<Set<string>>(() => {
@@ -23,7 +10,7 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const savedFavorites = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
+      localStorage.getItem("favorites") ?? "[]"
     );
     setFavorites(new Set(savedFavorites));
   }, []);
@@ -44,17 +31,14 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const value = useMemo(
+    () => ({ favorites, toggleFavorite }),
+    [favorites] // Memoize value only when 'favorites' changes
+  );
+
   return (
-    <FavoritesContext.Provider value={{ favorites, toggleFavorite }}>
+    <FavoritesContext.Provider value={value}>
       {children}
     </FavoritesContext.Provider>
   );
-};
-
-export const useFavorites = () => {
-  const context = useContext(FavoritesContext);
-  if (!context) {
-    throw new Error("useFavorites must be used within a FavoritesProvider");
-  }
-  return context;
 };

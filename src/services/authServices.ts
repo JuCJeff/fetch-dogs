@@ -15,7 +15,7 @@ export const loginUser = async (name: string, email: string) => {
 
     return { message: "Login successful", status: "OK" };
   } catch (error) {
-    console.log("Login failed: ", error);
+    console.debug(error);
     throw new Error("Unable to login. Please try again");
   }
 };
@@ -31,7 +31,7 @@ export const logoutUser = async () => {
 
     return { message: "Logout successful" };
   } catch (error) {
-    console.log("Logout failed: ", error);
+    console.debug("Logout failed: ", error);
     throw new Error("Unable to logout. Please try again.");
   }
 };

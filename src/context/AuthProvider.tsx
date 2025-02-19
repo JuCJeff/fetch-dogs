@@ -1,21 +1,7 @@
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import { loginUser, logoutUser } from "../services";
-
-interface AuthContextType {
-  isAuthenticated: boolean;
-  login: (name: string, email: string) => Promise<void>;
-  logout: () => Promise<void>;
-}
-
-export const AuthContext = createContext<AuthContextType | null>(null);
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -55,7 +41,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (error) {
       console.error("Logout failed:", error);
     }
-  }, []);
+  }, [navigate]);
 
   const authContextValue = useMemo(
     () => ({ isAuthenticated, login, logout }),
