@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { AuthProvider } from "./AuthProvider";
-import { FavoritesProvider } from "./FavoritesContext";
+import { FavoritesProvider } from "./FavoritesProvider";
 
 interface GlobalProviderProps {
   children: ReactNode;

@@ -1,7 +1,21 @@
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "./AuthContext";
 import { loginUser, logoutUser } from "../services";
+
+interface AuthContextType {
+  isAuthenticated: boolean;
+  login: (name: string, email: string) => Promise<void>;
+  logout: () => Promise<void>;
+}
+
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -24,10 +38,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         await loginUser(name, email);
         localStorage.setItem("isAuthenticated", "true");
         setIsAuthenticated(true);
-
         navigate("/search");
       } catch (error) {
-        console.error("Login failed: ", error);
+        console.error("Login failed:", error);
       }
     },
     [navigate]
@@ -38,7 +51,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       await logoutUser();
       localStorage.removeItem("isAuthenticated");
       setIsAuthenticated(false);
-
       navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
@@ -47,7 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const authContextValue = useMemo(
     () => ({ isAuthenticated, login, logout }),
-    [isAuthenticated, login, logout] // Only re-create when `isAuthenticated` changes
+    [isAuthenticated, login, logout]
   );
 
   return (
