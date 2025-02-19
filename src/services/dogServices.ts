@@ -2,37 +2,35 @@ import {
   DOGS_ENDPOINT,
   DOGS_SEARCH_ENDPOINT,
   DOGS_BREEDS_ENDPOINT,
+  DOGS_MATCH_ENDPOINT,
 } from "./apiConfig";
+import { fetchApi } from "../utils/apiUtils";
 
-import { Dog, FetchDogsParams } from "../types";
+import { Dog } from "../types";
 
 export const getDogBreeds = async () => {
-  try {
-    const response = await fetch(DOGS_BREEDS_ENDPOINT, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (!response.ok)
-      throw new Error(`Fetch dog breeds failed: ${response.statusText}`);
-
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    console.log("Fetch dog breeds failed: ", error);
-    throw new Error("Unable to fetch dog breeds. Please try again");
-  }
+  const data = await fetchApi(DOGS_BREEDS_ENDPOINT, {
+    method: "GET",
+    credentials: "include",
+  });
+  return data;
 };
+
+interface FetchDogsParams {
+  size?: number;
+  from?: number;
+  zipCodes?: string[];
+  breeds?: string[];
+  sort?: string;
+}
 
 export const fetchDogs = async ({
   size = 25,
   from = 0,
   breeds = [],
+  zipCodes = [],
   sort = "breed:asc",
 }: FetchDogsParams): Promise<{ dogs: Dog[]; total: number }> => {
-  console.log(breeds);
-
   const params = new URLSearchParams({
     size: size.toString(),
     from: from.toString(),
@@ -43,52 +41,57 @@ export const fetchDogs = async ({
     params.append("breeds", breeds.join(","));
   }
 
+  if (zipCodes.length !== 0) {
+    zipCodes.forEach((zip) => params.append("zipCodes", zip));
+  }
+
   const url = `${DOGS_SEARCH_ENDPOINT}?${params.toString()}`;
 
-  const response = await fetch(url, {
-    method: "GET",
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch dogs");
+  try {
+    const { resultIds, total } = await fetchApi<{
+      resultIds: string[];
+      total: number;
+    }>(url, {
+      method: "GET",
+      credentials: "include",
+    });
+    const dogs =
+      resultIds.length > 0 ? await getDogDetailsBasedOnId(resultIds) : [];
+    return { dogs, total };
+  } catch (error) {
+    console.error("Error fetching dogs:", error);
+    return { dogs: [], total: 0 };
   }
-
-  const data: { resultIds: string[]; total: number } = await response.json();
-
-  console.log(data);
-
-  // Fetch full dog details using the IDs
-  const dogDetailsResponse = await fetch(DOGS_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data.resultIds),
-    credentials: "include",
-  });
-
-  if (!dogDetailsResponse.ok) {
-    throw new Error("Failed to fetch dog details");
-  }
-
-  const dogs: Dog[] = await dogDetailsResponse.json();
-
-  return { dogs, total: data.total };
 };
 
 export const getDogDetailsBasedOnId = async (ids: string[]) => {
-  const dogDetailsResponse = await fetch(DOGS_ENDPOINT, {
+  const response = await fetchApi<Dog[]>(DOGS_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(ids),
     credentials: "include",
   });
 
-  if (!dogDetailsResponse.ok) {
-    throw new Error("Failed to fetch dog details");
-  }
+  return response;
+};
 
-  const dogs: Dog[] = await dogDetailsResponse.json();
+export const getMatchingDog = async (dogIds: string[]) => {
+  const { match: matchingDogId } = await fetchApi<{ match: string }>(
+    DOGS_MATCH_ENDPOINT,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dogIds),
+      credentials: "include",
+    }
+  );
 
-  
-  return dogs;
-}
+  const dogsResponse = await fetchApi<Dog[]>(DOGS_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify([matchingDogId]),
+    credentials: "include",
+  });
+
+  return dogsResponse[0];
+};
