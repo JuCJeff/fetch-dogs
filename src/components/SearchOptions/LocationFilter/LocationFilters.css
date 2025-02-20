@@ -1,0 +1,12 @@
+.location-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+@media (max-width: 1024px) {
+  .location-filters {
+    flex-direction: column;
+    gap: 1em;
+  }
+}

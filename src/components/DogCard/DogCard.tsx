@@ -1,6 +1,12 @@
-import type { DogCardProps } from "../../types";
+import type { Dog } from "@/types";
 
 import "./DogCard.css";
+
+interface DogCardProps {
+  dog: Dog;
+  onFavoriteClick?: (id: string) => void;
+  isFavorite?: boolean;
+}
 
 const DogCard = ({ dog, onFavoriteClick, isFavorite }: DogCardProps) => {
   return (

@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   justify-content: center;
-  margin: 0 auto; /* Centers the grid */
+  margin: 0 1em; /* Centers the grid */
 }
 
 .search-options {
@@ -18,5 +18,10 @@
   .dog-list {
     grid-template-columns: 1fr;
     align-items: center;
+  }
+
+  .search-options {
+    flex-direction: column;
+    gap: 1em;
   }
 }

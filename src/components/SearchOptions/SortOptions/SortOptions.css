@@ -1,0 +1,19 @@
+.sort-options-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+@media (max-width: 768px) {
+  .sort-options-container {
+    flex-direction: column;
+  }
+
+  .sort-options-container label {
+    margin-bottom: 0.2em;
+  }
+
+  .sort-options-container select {
+    width: 100%; /* Makes dropdown full width */
+  }
+}

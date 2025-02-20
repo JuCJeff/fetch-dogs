@@ -1,0 +1,11 @@
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+  gap: 1em;
+}
+
+.tabs button.active {
+  background-color: var(--fetch-yellow);
+  color: #1a1a1a;
+}

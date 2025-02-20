@@ -1,0 +1,19 @@
+.breed-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+@media (max-width: 768px) {
+  .breed-filter {
+    flex-direction: column;
+  }
+
+  .breed-filter label {
+    margin-bottom: 0.2em;
+  }
+
+  .breed-filter select {
+    width: 100%; /* Makes dropdown full width */
+  }
+}

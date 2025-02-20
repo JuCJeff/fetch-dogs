@@ -2,6 +2,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  --default-dark: #1a1a1a;
   --fetch-yellow: #f8a619;
   --fetch-purple: #2f0c38;
 
@@ -25,16 +26,17 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   display: flex;
   place-items: center;
   min-height: 100vh;
+  text-align: center;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  background-color: #1a1a1a;
+  background-color: var(--default-dark);
   border-radius: 1em;
   padding: 2em;
   gap: 1em;
@@ -47,7 +49,8 @@ h1 {
 
 input {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
+  border-color: var(--fetch-yellow);
   padding: 0.6em 1.2em;
   margin: 0 1em;
   font-size: 1em;

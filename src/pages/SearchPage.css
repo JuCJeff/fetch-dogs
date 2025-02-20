@@ -1,0 +1,21 @@
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-top: 1em;
+  margin-bottom: 1em;
+}
+
+.sticky-header .logout-btn {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
+
+@media (max-width: 768px) {
+  .sticky-header .logout-btn {
+    position: relative;
+    top: 0;
+    right: 0;
+  }
+}
