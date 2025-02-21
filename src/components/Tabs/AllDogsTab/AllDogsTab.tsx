@@ -121,6 +121,13 @@ const AllDogsTab = () => {
         setRadius={setRadius}
         onApplyFilter={applyLocationFilter}
       />
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(totalDogs / PAGE_SIZE)}
+        onPageChange={setCurrentPage}
+      />
+
       <div className="dog-list">
         {dogs.map((dog) => (
           <DogCard
@@ -131,11 +138,6 @@ const AllDogsTab = () => {
           />
         ))}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(totalDogs / PAGE_SIZE)}
-        onPageChange={setCurrentPage}
-      />
     </>
   );
 };

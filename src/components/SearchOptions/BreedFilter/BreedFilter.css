@@ -16,4 +16,8 @@
   .breed-filter select {
     width: 100%; /* Makes dropdown full width */
   }
+
+  #breed-select {
+    text-align: center;
+  }
 }

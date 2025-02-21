@@ -1,3 +1,5 @@
+import "./Pagination.css";
+
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -27,48 +29,54 @@ const Pagination = ({
   }
 
   return (
-    <div className="pagination">
+    <div className="pagination-container">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
+        className="pagination-button previous"
+        aria-label="Previous page"
       >
         Previous
       </button>
 
-      {/* First 3 pages */}
       {firstPages.map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={page === currentPage ? "active" : ""}
+          className={`pagination-button ${
+            page === currentPage ? "active" : ""
+          }`}
+          aria-current={page === currentPage ? "page" : undefined}
         >
           {page}
         </button>
       ))}
 
-      {/* Ellipsis before middle pages */}
-      {middleStart > 4 && <span>...</span>}
+      {middleStart > 4 && <span className="ellipsis">...</span>}
 
-      {/* Middle dynamic pages */}
       {middlePages.map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={page === currentPage ? "active" : ""}
+          className={`pagination-button ${
+            page === currentPage ? "active" : ""
+          }`}
+          aria-current={page === currentPage ? "page" : undefined}
         >
           {page}
         </button>
       ))}
 
-      {/* Ellipsis before last pages */}
-      {middleEnd < totalPages - 3 && <span>...</span>}
+      {middleEnd < totalPages - 3 && <span className="ellipsis">...</span>}
 
-      {/* Last 3 pages */}
       {lastPages.map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={page === currentPage ? "active" : ""}
+          className={`pagination-button ${
+            page === currentPage ? "active" : ""
+          }`}
+          aria-current={page === currentPage ? "page" : undefined}
         >
           {page}
         </button>
@@ -77,6 +85,8 @@ const Pagination = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
+        className="pagination-button next"
+        aria-label="Next page"
       >
         Next
       </button>

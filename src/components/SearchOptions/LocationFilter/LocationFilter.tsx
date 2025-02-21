@@ -23,7 +23,7 @@ const LocationFilter = ({
 }: LocationFilterProps) => {
   return (
     <div className="location-filters">
-      <span>
+      <span className="city-container">
         <label htmlFor="city">City</label>
         <input
           id="city"

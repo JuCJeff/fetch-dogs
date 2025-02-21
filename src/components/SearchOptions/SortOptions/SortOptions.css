@@ -16,4 +16,8 @@
   .sort-options-container select {
     width: 100%; /* Makes dropdown full width */
   }
+
+  #sort-options {
+    text-align: center;
+  }
 }

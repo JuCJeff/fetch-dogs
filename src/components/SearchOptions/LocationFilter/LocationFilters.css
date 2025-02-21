@@ -9,4 +9,9 @@
     flex-direction: column;
     gap: 1em;
   }
+
+  .city-container {
+    display: flex;
+    flex-direction: column;
+  }
 }

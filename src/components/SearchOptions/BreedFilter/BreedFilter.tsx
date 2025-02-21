@@ -29,7 +29,7 @@ const BreedFilter = ({ selectedBreed, onBreedSelect }: BreedFilterProps) => {
 
   return (
     <div className="breed-filter">
-      <label htmlFor="breed-select">Breed filter: </label>
+      <label htmlFor="breed-select">Breed filter </label>
       <select
         id="breed-select"
         value={selectedBreed}
