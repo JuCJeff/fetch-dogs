@@ -2,7 +2,7 @@ import { LOCATIONS_SEARCH_ENDPOINT } from "./apiConfig";
 
 import { fetchApi } from "../utils/apiUtils";
 
-import type { Location } from "@/types";
+import type { Location } from "../types";
 
 type GetLocationsProps = {
   city?: string;
@@ -13,7 +13,7 @@ type GetLocationsProps = {
 };
 
 // Fetch the city coordinates (latitude & longitude)
-const getCityCoordinates = async (city: string, state: string) => {
+export const getCityCoordinates = async (city: string, state: string) => {
   const states = [state];
 
   const body = { city, states };
@@ -43,7 +43,7 @@ const getCityCoordinates = async (city: string, state: string) => {
   }
 };
 
-const getBoundingBox = (
+export const getBoundingBox = (
   latitude: number,
   longitude: number,
   radius: number
@@ -63,7 +63,7 @@ const getBoundingBox = (
 };
 
 // Get zip codes within a specified radius
-const getZipCodesInRadius = async (
+export const getZipCodesInRadius = async (
   latitude: number,
   longitude: number,
   radius: number

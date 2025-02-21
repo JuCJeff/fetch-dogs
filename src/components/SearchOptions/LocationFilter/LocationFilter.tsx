@@ -22,7 +22,6 @@ const LocationFilter = ({
   onFilter,
 }: LocationFilterProps) => {
   return (
-    // TODO: change this to a form
     <div className="location-filters">
       <span>
         <label htmlFor="city">City</label>

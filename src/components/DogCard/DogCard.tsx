@@ -1,4 +1,4 @@
-import type { Dog } from "@/types";
+import type { Dog } from "../../types";
 
 import "./DogCard.css";
 
@@ -24,14 +24,12 @@ const DogCard = ({ dog, onFavoriteClick, isFavorite }: DogCardProps) => {
           <strong>Location:</strong> ZIP {dog.zip_code}
         </p>
 
-        {onFavoriteClick && (
-          <button
-            className={`favorite-btn ${isFavorite ? "favorited" : ""}`}
-            onClick={() => onFavoriteClick(dog.id)}
-          >
-            {isFavorite ? "★ Favorited" : "☆ Favorite"}
-          </button>
-        )}
+        <button
+          className={`favorite-btn ${isFavorite ? "favorited" : ""}`}
+          onClick={() => (onFavoriteClick ? onFavoriteClick(dog.id) : {})}
+        >
+          {isFavorite ? "★ Favorited" : "☆ Favorite"}
+        </button>
       </div>
     </div>
   );
